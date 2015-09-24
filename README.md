@@ -1,10 +1,14 @@
 # UNIBULL
 
-FIXME: Write a one-line description of your library/project.
+Repo for our ucsc independent study class project, unibull, which is an app that will help guide students in their college experience. Planned features: Classrooms, Event/News Bulletin, Food/Transportation, Clubs, and more!
 
-## Overview
+##Intro:
 
-FIXME: Write a paragraph about the library/project and highlight its goals.
+Welcome to the github page for our UCSC Independent Study project, UniBull!
+
+The idea is for UniBull to be an online hub local to your university, where you can create forums for your school's classes and clubs to discuss homework problems, create group study guides, find partners for group projects, or just talk about similar interests.
+
+There will also be an online bulletin board where you can view flyers and ads that other students have posted, whether they are flyers for upcoming guest speakers and lectures, local concerts and shows, ads for tutoring or job opportunities, and more. For UCSC specifically, we have also added a place to view the dining hall menus for each day, where you can rate and comment on different items at specific dining halls.
 
 ## Setup
 ### CLJS
@@ -14,17 +18,6 @@ To get an interactive development environment run:
     rlwrap lein figwheel
 
 and open your browser at [localhost:3449](http://localhost:3449/).
-This will auto compile and send all changes to the browser without the
-need to reload. After the compilation process is complete, you will
-get a Browser Connected REPL. An easy way to try it is:
-
-    (js/alert "Am I connected?")
-
-and you should see an alert in the browser window.
-
-To clean all compiled files:
-
-    lein clean
 
 To create a production build run:
 
@@ -34,12 +27,10 @@ And open your browser in `resources/public/index.html`. You will not
 get live reloading, nor a REPL.
 
 ### CLJ
-lein repl
+<cmdl>? lein repl
 
-=> (reset)
+[repl]? (reset)
 
 ## License
 
-Copyright © 2014 FIXME
-
-Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.
+Copyright © 2015 All Rights Reserved

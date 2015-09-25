@@ -2,7 +2,7 @@
   (:require [midje.sweet :refer :all]
             [unibull.app :refer [routes]]
             [unibull.datomic :as db]
-            [datomic.api :as d]
+            [unibull.test-db :refer [create-empty-in-mem-db]]
             ))
 
 (defn- request [resource & [params method]]
@@ -22,15 +22,6 @@
 (defn- delete-class [class-name]
   (-> (request "/class" {:name class-name} :delete)
       :body read-string))
-
-(defn- create-empty-in-mem-db []
-  (let [uri "datomic:mem://unibull-test-db"]
-    (d/delete-database uri)
-    (d/create-database uri)
-    (let [conn (d/connect uri)
-          schema (load-file "resources/datomic/schema.edn")]
-      (d/transact conn schema)
-      {:conn conn})))
 
 (background
   (around :facts (with-redefs [reloaded.repl/system

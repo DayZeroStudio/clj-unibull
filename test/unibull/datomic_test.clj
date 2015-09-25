@@ -1,20 +1,11 @@
 (ns unibull.datomic-test
   (:require [midje.sweet :refer :all]
-            [datomic.api :as d]
-            [unibull.datomic :as db]))
-
-(defn- create-empty-in-mem-db []
-  (let [uri "datomic:mem://unibull-test-db"]
-    (d/delete-database uri)
-    (d/create-database uri)
-    (let [conn (d/connect uri)
-          schema (load-file "resources/datomic/schema.edn")]
-      (d/transact conn schema)
-      conn)))
+            [unibull.datomic :as db]
+            [unibull.test-db :refer [create-empty-in-mem-db]]
+            ))
 
 (background
-  (around :facts (let [conn (create-empty-in-mem-db)
-                       c {:conn conn}]
+  (around :facts (let [c (create-empty-in-mem-db)]
                    ?form)))
 
 (fact "we can create and get a class!"

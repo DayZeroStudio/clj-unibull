@@ -1,14 +1,17 @@
 (ns unibull.app
-  (:require [compojure.route :as route]
-            [ring.middleware.defaults :refer [wrap-defaults api-defaults]]
-            [ring.middleware.cors :refer [wrap-cors]]
-            [ring.middleware.edn :refer [wrap-edn-params]]
-            [compojure.core :refer [defroutes context GET POST DELETE]]
-            [unibull.api :as api]
-            [reloaded.repl :refer [system]]))
+  (:require
+    [compojure.handler :as handler]
+    [compojure.route :as route]
+    [ring.middleware.edn :refer [wrap-edn-params]]
+    [ring.util.response :refer [resource-response]]
+    [compojure.core :refer [defroutes context GET POST DELETE]]
+    [unibull.api :as api]
+    [reloaded.repl :refer [system]]))
 
 (defroutes routes
-  (GET "/" [] "index.html")
+  (GET "/" []
+       (resource-response "index.html"
+                          {:root "public"}))
 
   (context "/class" []
            (GET "/" []
@@ -24,7 +27,6 @@
 
 (def app
   (-> routes
-      (wrap-defaults api-defaults)
+      (handler/site)
       (wrap-edn-params)
-      (wrap-cors :access-control-allow-origin [#"http://localhost:3449.*" #"http://localhost:3000.*"]
-                 :access-control-allow-methods [:get :post :delete])))
+      ))

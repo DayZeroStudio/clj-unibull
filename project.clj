@@ -8,7 +8,6 @@
                  [org.clojure/clojure "1.7.0"]
                  [org.danielsz/system "0.1.9"]
                  [ring "1.4.0"]
-                 [ring-cors "0.1.7"]
                  [fogus/ring-edn "0.3.0"]
                  [ring/ring-defaults "0.1.5"]
                  [compojure "1.4.0"]
@@ -22,9 +21,13 @@
                  [org.clojure/clojurescript "1.7.122"]
                  [quiescent "0.2.0-alpha1"]
                  [cljs-ajax "0.3.14"]
-
-                 ;; TOOLS
                  ]
+  :profiles {:dev
+             {:dependencies [[clj-webdriver "0.7.2"]
+                             [org.seleniumhq.selenium/selenium-server "2.47.0"]]
+              :datomic {:config "resources/datomic/free-transactor-template.properties"
+                        :db-uri "datomic:free://localhost:4334/unibull"}}}
+  :datomic {:schemas ["resources/datomic" ["schema.edn"]]}
 
   :plugins [[lein-cljsbuild "1.1.0"]
             [lein-figwheel "0.4.0"]
@@ -32,11 +35,7 @@
             ]
 
   :source-paths ["src/clj"]
-
-  :datomic {:schemas ["resources/datomic" ["schema.edn"]]}
-  :profiles {:dev
-             {:datomic {:config "resources/datomic/free-transactor-template.properties"
-                        :db-uri "datomic:free://localhost:4334/unibull"}}}
+  :test-paths ["test"]
 
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"]
 

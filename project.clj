@@ -4,26 +4,46 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
-  :dependencies [[org.clojure/clojure "1.7.0"]
-                 [org.clojure/clojurescript "1.7.122"]
-                 [org.clojure/core.async "0.1.346.0-17112a-alpha"]
+  :dependencies [; SERVER
+                 [org.clojure/clojure "1.7.0"]
                  [org.danielsz/system "0.1.9"]
-                 [ring "1.3.1"]
+                 [ring "1.4.0"]
+                 [ring-cors "0.1.7"]
+                 [fogus/ring-edn "0.3.0"]
+                 [ring/ring-defaults "0.1.5"]
                  [compojure "1.4.0"]
+                 [com.datomic/datomic-free "0.9.4815.12"]
+
+                 ; BOTH
+                 [midje "1.7.0"]
+                 [org.clojure/core.async "0.1.346.0-17112a-alpha"]
+
+                 ;; CLIENT
+                 [org.clojure/clojurescript "1.7.122"]
+                 [quiescent "0.2.0-alpha1"]
+                 [cljs-ajax "0.3.14"]
+
+                 ;; TOOLS
                  ]
 
   :plugins [[lein-cljsbuild "1.1.0"]
             [lein-figwheel "0.4.0"]
+            [lein-datomic "0.2.0"]
             ]
 
   :source-paths ["src/clj"]
+
+  :datomic {:schemas ["resources/datomic" ["schema.edn"]]}
+  :profiles {:dev
+             {:datomic {:config "resources/datomic/free-transactor-template.properties"
+                        :db-uri "datomic:free://localhost:4334/unibull"}}}
 
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"]
 
   :cljsbuild {:builds
               [{:id "dev"
                 :source-paths ["src/cljs"]
-                :figwheel { :on-jsload "unibull.core/on-js-reload" }
+                :figwheel {:on-jsload "unibull.core/on-js-reload" }
                 :compiler {:main unibull.core
                            :asset-path "js/compiled/out"
                            :output-to "resources/public/js/compiled/unibull.js"
@@ -46,24 +66,12 @@
 
              ;; Start an nREPL server into the running figwheel process
              ;; :nrepl-port 7888
-
-             ;; Server Ring Handler (optional)
-             ;; if you want to embed a ring handler into the figwheel http-kit
-             ;; server, this is for simple ring servers, if this
-             ;; doesn't work for you just run your own server :)
-             ;; :ring-handler hello_world.server/handler
-
-             ;; To be able to open files in your editor from the heads up display
-             ;; you will need to put a script on your path.
-             ;; that script will have to take a file path and a line number
-             ;; ie. in  ~/bin/myfile-opener
-             ;; #! /bin/sh
-             ;; emacsclient -n +$2 $1
-             ;;
-             ;; :open-file-command "myfile-opener"
-
+             ;; :nrepl-middleware []
              ;; if you want to disable the REPL
              ;; :repl false
+
+             ;; $2 ln, $1 filepath
+             ;; :open-file-command "myfile-opener"
 
              ;; to configure a different figwheel logfile path
              ;; :server-logfile "tmp/logs/figwheel-logfile.log"

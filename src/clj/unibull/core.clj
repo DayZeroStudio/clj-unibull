@@ -5,7 +5,8 @@
     [unibull.systems :refer [prod-system]]))
 
 (def config
-  {:web {:http-port 3000}})
+  {:web {:port 3000}
+   :datomic {:url "datomic:free://localhost:4334/unibull"}})
 
 (defn -main []
   (reloaded.repl/set-init! #(prod-system config))

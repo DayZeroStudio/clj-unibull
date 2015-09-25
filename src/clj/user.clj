@@ -3,6 +3,7 @@
             [unibull.systems :refer [dev-system]]))
 
 (def config
-  {:web {:http-port 3000}})
+  {:web {:port 3000}
+   :datomic {:url "datomic:free://localhost:4334/unibull"}})
 
 (reloaded.repl/set-init! #(dev-system config))

@@ -1,8 +1,9 @@
 (ns unibull.datomic-test
-  (:require [midje.sweet :refer :all]
-            [unibull.datomic :as db]
-            [unibull.test-db :refer [create-empty-in-mem-db]]
-            ))
+  (:require
+    [midje.sweet :refer :all]
+    [unibull.datomic :as db]
+    [unibull.test-db :refer [create-empty-in-mem-db]]
+    ))
 
 (background
   (around :facts (let [c (create-empty-in-mem-db)]

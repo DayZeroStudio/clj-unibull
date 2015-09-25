@@ -1,8 +1,11 @@
 (ns unibull.test-db
-  (:require [datomic.api :as d]))
+  (:require
+    [datomic.api :as d]
+    [unibull.config :refer [env]]))
 
+(def cfg (:test env))
 (defn create-empty-in-mem-db []
-  (let [uri "datomic:mem://unibull-test-db"]
+  (let [uri (:url (cfg :datomic))]
     (d/delete-database uri)
     (d/create-database uri)
     (let [conn (d/connect uri)

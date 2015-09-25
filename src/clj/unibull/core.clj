@@ -2,12 +2,9 @@
   (:gen-class)
   (:require
     [reloaded.repl :refer [system init start stop go reset]]
-    [unibull.systems :refer [prod-system]]))
-
-(def config
-  {:web {:port 3000}
-   :datomic {:url "datomic:free://localhost:4334/unibull"}})
+    [unibull.systems :refer [prod-system]]
+    ))
 
 (defn -main []
-  (reloaded.repl/set-init! #(prod-system config))
+  (reloaded.repl/set-init! prod-system)
   (go))
